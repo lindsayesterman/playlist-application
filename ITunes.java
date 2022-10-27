@@ -16,14 +16,16 @@ public class ITunes {
         pl.addLast("RadioLab", 25.5);
         pl.add("Homo deus", 7, 2);
         System.out.println(pl.displayPlaylistForward());
-        pl.deleteFirst();
+        pl.deleteLast();
         // pl.addLast("MakeMeSmart", 24.5);
         // pl.addLast("Worldly", 55);
         // pl.addLast("Explained", 23.0);
         // pl.addLast("Invisibilia", 33.5);
-        System.out.println(pl.displayPlaylistForward());
+        // System.out.println(pl.displayPlaylistForward());
         // System.out.println(pl.displayPlaylistBackward());
-        // System.out.println(pl.deleteEveryMthEpisode(3));
+        // Playlist pl1 = new Playlist();
+        // System.out.println(pl1.displayPlaylistBackward());
+        System.out.println(pl.deleteEveryMthEpisode(3));
         // System.out.println(pl.displayPlaylistForward());
         // System.out.println(pl.displayPlaylistBackward());
     }

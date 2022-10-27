@@ -75,7 +75,12 @@ public class Playlist {
      */
     public String displayPlaylistBackward() {
         String output = "[END] ";
-        Episode current = head.prev;
+        Episode current;
+        if (head != null) {
+            current = head.prev;
+        } else {
+            current = head;
+        }
         if (current != null) {
             while (current.prev != head.prev) {
                 output += current + " -> ";
@@ -90,7 +95,6 @@ public class Playlist {
 
     // Add a new Episode at the beginning of the Playlist
     public void addFirst(String title, double length) {
-        // // TODO ..
         if (head != null & size != 1) {
             Episode last = head.prev;
             Episode tmp = new Episode(title, length, head, last);
@@ -158,7 +162,6 @@ public class Playlist {
 
     // Delete the first Episode in the Playlist
     public Episode deleteFirst() {
-        // TODO .. //
         if (head != null) {
             Episode oldHead = head;
             if (size == 1) {
@@ -181,11 +184,11 @@ public class Playlist {
     // (There is no special "last" variable in this Playlist;
     // think of alternative ways to find that last Episode)
     public Episode deleteLast() {
-        // TODO .. //
         if (head != null) {
             if (size > 1) {
                 Episode temp = head;
-                while (temp.next.next != head) {
+                // fetch second to last episode
+                for (int i = 0; i < size - 2; i++) {
                     temp = temp.next;
                 }
                 Episode lastNode = temp.next;
@@ -211,7 +214,7 @@ public class Playlist {
             throw new RuntimeException("[Error] Cannot delete episode from an empty Playlist!");
         }
         Episode curr = head;
-        Episode prev = null;
+        Episode prev = head;
         while (!curr.getTitle().equals(title)) {
             if (curr.next == head) {
                 throw new RuntimeException("[Error] There is no episode with that title.");
@@ -221,17 +224,18 @@ public class Playlist {
         }
 
         if (size == 1) {
+            Episode oldHead = head;
             head = null;
-            return head;
-        }
-
-        else if (curr.next == head) {
+            return oldHead;
+        } else if (curr.next == head) {
+            // if episode is tail, change head and tail pointers for double-ended
+            // functionality
             prev.next = head;
             head.prev = prev;
         } else {
-            Episode temp = curr.next;
-            prev.next = temp;
-            temp.prev = prev;
+            // normal removal
+            prev.next = curr.next;
+            curr.next.prev = prev;
         }
         return curr;
     }
@@ -250,18 +254,16 @@ public class Playlist {
     // LEVEL WHICH UPDATES SIZE. Inside while loop check whether it's third
     public Episode deleteEveryMthEpisode(int m) {
         // TODO .. //
-        // Episode temp = head;
-        // int count = 0;
-        // while (this.size > 1) {
-        // if (count % 3 == 0) {
-        // deleteEpisode(temp.getTitle());
-        // }
-        // temp = temp.next;
-        // count++;
-        // }
-        // return temp;
-        return null;
+        Episode temp = head;
+        int count = 0;
+        while (this.size > 1) {
+            if (count % 3 == 0) {
+                deleteEpisode(temp.getTitle());
+            }
+            temp = temp.next;
+            count++;
+        }
+        return temp;
     }
-
 }
 // End of Playlist class
